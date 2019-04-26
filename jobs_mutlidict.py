@@ -1,11 +1,11 @@
 # * loads Seek for Data Analysis jobs job descriptions
 # builds multidict for skill keywords
-import multidict
 import pandas as pd
 import re
 import pickle
 import sys
 import matplotlib.pyplot as plt
+
 # paths
 raw_dir = 'data/raw/'
 save_dir = 'data/interim/'
@@ -22,7 +22,7 @@ skills = ['collection', 'reporting', 'statistical', 'visualisation', 'cleansing'
             'modelling', 'python', 'sql', 'excel', 'machine', 'Tableau', 'powerbi',
             'sas', 'jupyter', 'aws', 'azure', 'cloud', 'etl', 'rdbms', 'access']
 
-# make a keyword multidict of skills
+# make a keyword dict of skills
 keySkillsDict = {}
 tmpDict = {}
 
@@ -42,11 +42,9 @@ for k, v in sorted(tmpDict.items(), key=lambda kv: kv[1]):
 
 # making a df with percent column, for plots
 df_skills = pd.DataFrame(keySkillsDict.items(), columns=['skill', 'total'])
-df_skills['percentage'] = (df_skills.total / len(jobs_text_list)) * 100 
+df_skills['percentage'] = (df_skills.total / len(jobs_text_list)) * 100
 df_skills.head()
 
 plt.barh(df_skills['skill'], df_skills['total'])
 
 plt.barh(df_skills['skill'], df_skills['percentage'])
-
-
